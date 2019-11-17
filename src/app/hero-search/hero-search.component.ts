@@ -10,7 +10,7 @@ import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
   styleUrls: ['./hero-search.component.css']
 })
 export class HeroSearchComponent implements OnInit {
-  private heroes$: Observable<Hero[]>;
+  heroes$: Observable<Hero[]>;
   private searchTerms = new Subject<string>();
 
   constructor(private heroService: HeroService) {
