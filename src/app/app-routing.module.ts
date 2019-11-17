@@ -4,6 +4,9 @@ import {HerosComponent} from './heros/heros.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {HeroDetailComponent} from './hero-detail/hero-detail.component';
 import {RxjsComponent} from './rxjs/rxjs.component';
+import {DirectiveComponent} from './directive/directive.component';
+import {CustomPipeComponent} from './custom-pipe/custom-pipe.component';
+import {HeroFormComponent} from './hero-form/hero-form.component';
 
 // 配置路由
 const routes: Routes = [
@@ -14,6 +17,9 @@ const routes: Routes = [
   {path: 'detail/:id', component: HeroDetailComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'rxjs', component: RxjsComponent},
+  {path: 'directive', component: DirectiveComponent},
+  {path: 'customPipe', component: CustomPipeComponent},
+  {path: 'heroForm', component: HeroFormComponent},
 ];
 
 @NgModule({

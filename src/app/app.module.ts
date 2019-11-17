@@ -12,7 +12,16 @@ import {RxjsComponent} from './rxjs/rxjs.component';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {InMemoryDataService} from './service/in-memory-data.service';
-import { HeroSearchComponent } from './hero-search/hero-search.component';
+import {HeroSearchComponent} from './hero-search/hero-search.component';
+import {DirectiveComponent} from './directive/directive.component';
+import {HighlightDirective} from './directive/highlight.directive';
+import {UnlessDirective} from './directive/unless.directive';
+import {ExponentialStrengthPipe} from './pipe/exponential-strength.pipe';
+import {CustomPipeComponent} from './custom-pipe/custom-pipe.component';
+import {HeroFormComponent} from './hero-form/hero-form.component';
+import {ForbiddenNameValidatorDirective} from './hero-form/forbidden-name-validator.directive';
+import { IdentityRevealedValidatorDirective } from './hero-form/identity-revealed-validator.directive';
+import { UniqueAlterEgoValidatorDirective } from './hero-form/unique-alter-ego-validator.directive';
 
 @NgModule({
   declarations: [
@@ -22,7 +31,16 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
     MessagesComponent,
     DashboardComponent,
     RxjsComponent,
-    HeroSearchComponent
+    HeroSearchComponent,
+    DirectiveComponent,
+    HighlightDirective,
+    UnlessDirective,
+    ExponentialStrengthPipe,
+    CustomPipeComponent,
+    HeroFormComponent,
+    ForbiddenNameValidatorDirective,
+    IdentityRevealedValidatorDirective,
+    UniqueAlterEgoValidatorDirective
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,75 @@
+<div class="container">
+  <div [hidden]="submitted">
+    <h1>Hero Form</h1>
+    <form (ngSubmit)="onSubmit()" #heroForm="ngForm" appIdentityRevealed>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" name="name" class="form-control"
+               required appForbiddenName="Bob"
+               [(ngModel)]="model.name" #name="ngModel">
+        <div>TODO 调试错误信息：{{name.errors | json}}</div>
+        <div *ngIf="name.errors?.required" class="alert alert-danger">
+          Name is required
+        </div>
+        <div *ngIf="name.errors?.forbiddenName" class="alert alert-danger">
+          禁止的名字
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="alterEgo">
+          Alter Ego。 这里设置[ngModelOptions]=updateOn: blur减小异步验证的频率，节约资源。
+          输入Tom查看效果。
+        </label>
+        <input type="text" class="form-control" id="alterEgo"
+               [(ngModel)]="model.alterEgo" name="alterEgo" #alterEgo="ngModel"
+               appUniqueAlterEgo [ngModelOptions]="{updateOn:'blur'}">
+        <div>TODO 调试：{{alterEgo.errors | json}}</div>
+        <div *ngIf="alterEgo.pending">正在验证中。。。</div>
+        <div *ngIf="alterEgo.errors?.uniqueAlterEgo" class="alert alert-danger alter-ego-errors">
+          英雄第二人格已经被占用。
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label for="power">Hero Power</label>
+        <select class="form-control" id="power"
+                required
+                [(ngModel)]="model.power" name="power"
+                #power="ngModel">
+          <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+        </select>
+        <div [hidden]="power.valid || power.pristine" class="alert alert-danger">
+          Power is required
+        </div>
+      </div>
+
+      <div *ngIf="heroForm.errors?.identityRevealed" class="cross-validation-error-message alert alert-danger">
+        英雄名和第二人格名相同，英雄已经暴露了。
+      </div>
+      <div>TODO 表单调试信息：{{heroForm.errors | json}}</div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">Submit</button>
+      <button type="button" class="btn btn-default" (click)="newHero(); heroForm.reset()">New Hero</button>
+    </form>
+  </div>
+
+  <div [hidden]="!submitted">
+    <h2>You submitted the following:</h2>
+    <div class="row">
+      <div class="col-xs-3">Name</div>
+      <div class="col-xs-9">{{ model.name }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Alter Ego</div>
+      <div class="col-xs-9">{{ model.alterEgo }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Power</div>
+      <div class="col-xs-9">{{ model.power }}</div>
+    </div>
+    <br>
+    <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+  </div>
+</div>
