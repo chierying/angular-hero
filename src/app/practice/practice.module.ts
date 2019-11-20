@@ -13,6 +13,7 @@ import {RxjsComponent} from './rxjs/rxjs.component';
 import {HighlightDirective} from './highlight.directive';
 import {UnlessDirective} from './unless.directive';
 import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import {FormsModule} from '@angular/forms';
   ],
   imports: [
     CommonModule,
+    HttpClientModule,
     FormsModule,
     PracticeRoutingModule,
   ]

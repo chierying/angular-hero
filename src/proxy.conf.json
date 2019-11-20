@@ -1,0 +1,29 @@
+{
+  "/baidu": {
+    "target": "https://www.baidu.com",
+    "secure": false,
+    "pathRewrite": {
+      "^/baidu": ""
+    },
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/mzitu": {
+    "target": "https://www.mzitu.com",
+    "pathRewrite": {
+      "^/mzitu": ""
+    },
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/test-api": {
+    "target": "https://api.mlwei.com/url/api/",
+    "pathRewrite": {
+      "^/test-api": ""
+    },
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

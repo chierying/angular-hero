@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'app-rxjs',
@@ -7,21 +7,24 @@ import {BehaviorSubject} from 'rxjs';
   styleUrls: ['./rxjs.component.css']
 })
 export class RxjsComponent implements OnInit {
-  messages: string[] = [];
-  sub$ = new BehaviorSubject<string>('   ');
+  url = 'localhost:4200/test-api';
+  html: string;
+  httpOptions = {
+    headers: new HttpHeaders({
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
+      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+    })
+  };
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
   ngOnInit() {
-    console.log(this.sub$.getValue());
-
-    this.sub$.next('fsdfasdf');
-    console.log(this.sub$.getValue());
+    this.http.get(this.url)
+      .subscribe(value => {
+        console.log(value);
+      });
   }
 
-  log(message: string) {
-    this.messages.push(message);
-  }
 
 }
