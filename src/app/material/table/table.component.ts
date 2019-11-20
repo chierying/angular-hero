@@ -3,9 +3,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
 import {TableDataSource, TableItem} from './table-datasource';
-import {Subject} from 'rxjs';
-import {debounceTime, distinctUntilChanged, tap} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs';
 import {MatSnackBar} from '@angular/material';
+import {debounceTime, distinctUntilChanged, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-table',
@@ -16,7 +16,7 @@ export class TableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   @ViewChild(MatTable, {static: false}) table: MatTable<TableItem>;
-  filterTerm$ = new Subject();
+  filterText$ = new BehaviorSubject(null);
   dataSource: TableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -27,17 +27,21 @@ export class TableComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.dataSource = new TableDataSource();
-
-    this.dataSource.filter$ = this.filterTerm$.pipe(
-      debounceTime<string>(300),
-      distinctUntilChanged(),
-      tap(x => console.log(`过滤： ${x}`))
-    );
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.dataSource.filterText$ = this.filterText$.pipe(
+      debounceTime<string>(300),
+      distinctUntilChanged(),
+      tap(text => {
+        this.dataSource.filterText = text;
+        // 过滤规则改变就到第一页
+        this.paginator.firstPage();
+        this.snackBar.open(`过滤数据：${text}`, 'ok', {duration: 2000});
+      })
+    );
     this.table.dataSource = this.dataSource;
   }
 
@@ -45,9 +49,6 @@ export class TableComponent implements AfterViewInit, OnInit {
    * 过滤表格
    */
   filterTable(value: string) {
-    this.snackBar.open(`过滤数据：${value}`, 'ok', {duration: 2000});
-    console.log(value);
-    this.dataSource.filterString = value;
-    this.filterTerm$.next(value);
+    this.filterText$.next(value);
   }
 }

@@ -1,5 +1,5 @@
 <mat-form-field class="full-width-table">
-  <input matInput #filterBox  placeholder="过滤" (input)="filterTable(filterBox.value.toLowerCase())">
+  <input matInput #filterBox placeholder="过滤" (input)="filterTable(filterBox.value.toLowerCase())">
 </mat-form-field>
 <div class="mat-elevation-z8">
   <table mat-table class="full-width-table" matSort aria-label="Elements">
@@ -20,9 +20,8 @@
   </table>
 
   <mat-paginator #paginator
-                 [length]="dataSource.data.length"
                  [pageIndex]="0"
                  [pageSize]="5"
-[pageSizeOptions]="[5, 10, 15, 20]">
-</mat-paginator>
+                 [pageSizeOptions]="[5, 10, 15, 20]">
+  </mat-paginator>
 </div>

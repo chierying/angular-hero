@@ -43,9 +43,10 @@ export class TableDataSource extends DataSource<TableItem> {
   data: TableItem[] = EXAMPLE_DATA;
   paginator: MatPaginator;
   sort: MatSort;
-  // 表格过滤
-  filter$: Observable<string>;
-  filterString: string;
+  // 表格过滤流
+  filterText$: Observable<string>;
+  // 当前过滤字符
+  filterText: string;
 
   constructor() {
     super();
@@ -63,13 +64,12 @@ export class TableDataSource extends DataSource<TableItem> {
       observableOf(this.data),
       this.paginator.page,
       this.sort.sortChange,
-      this.filter$,
+      this.filterText$,
     ];
 
     return merge(...dataMutations).pipe(
       map(() => {
-        const filteredData = this.getPagedData(this.getSortedData(this.getFilteredData([...this.data])));
-        return filteredData;
+        return this.getPagedData(this.getSortedData(this.getFilteredData([...this.data])));
       }));
   }
 
@@ -84,10 +84,14 @@ export class TableDataSource extends DataSource<TableItem> {
    * 过滤数据
    */
   private getFilteredData(data: TableItem[]) {
-    if (!this.filterString) {
-      return data;
+    let filteredData;
+    if (!this.filterText) {
+      filteredData = data;
+    } else {
+      filteredData = data.filter(item => item.name.toLocaleLowerCase().includes(this.filterText));
     }
-    return data.filter(item => item.name.toLocaleLowerCase().includes(this.filterString));
+    this.paginator.length = filteredData.length;
+    return filteredData;
   }
 
   /**

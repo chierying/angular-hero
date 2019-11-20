@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject, combineLatest, from} from 'rxjs';
 
 @Component({
   selector: 'app-rxjs',
@@ -7,24 +8,45 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
   styleUrls: ['./rxjs.component.css']
 })
 export class RxjsComponent implements OnInit {
-  url = 'localhost:4200/test-api';
-  html: string;
-  httpOptions = {
-    headers: new HttpHeaders({
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
-      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
-    })
-  };
+
 
   constructor(private http: HttpClient) {
   }
 
   ngOnInit() {
-    this.http.get(this.url)
-      .subscribe(value => {
-        console.log(value);
-      });
+    this.combineLatest();
   }
 
+  private combineLatest() {
+    const arya = ['a1', 'a2', 'a3'];
+    const aryb = ['b1', 'b2', 'b3'];
+    const aryc = ['c1', 'c2', 'c3'];
+
+    let bs = new BehaviorSubject(null);
+    let fa = from(arya);
+    let fb = from(aryb);
+    let fc = from(aryc);
+
+    fa.subscribe(value => bs.next(value));
+
+    let filters = [bs.asObservable(), fb, fc];
+    combineLatest(filters)
+      .subscribe(x => console.log(x));
+  }
+
+  private obs2sub() {
+    const subject = new BehaviorSubject<number>(null);
+
+    subject.subscribe({
+      next: (v) => console.log(`observerA: ${v}`)
+    });
+    subject.subscribe({
+      next: (v) => console.log(`observerB: ${v}`)
+    });
+
+    const observable = from([1, 2, 3]);
+
+    observable.subscribe(subject); // You can subscribe providing a Subject
+  }
 
 }
