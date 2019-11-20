@@ -1,0 +1,144 @@
+<h1>表单字段</h1>
+
+
+<div style="display: flex; flex-direction: column">
+  <mat-form-field>
+    <input matInput placeholder="请输入">
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput placeholder="Textarea"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Select">
+      <mat-option value="option">Option</mat-option>
+      <mat-option value="option">Option</mat-option>
+      <mat-option value="option">Option</mat-option>
+      <mat-option value="option">Option</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+
+<p>
+  <mat-form-field appearance="legacy">
+    <mat-label>Legacy form field</mat-label>
+    <input matInput placeholder="Placeholder">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    <mat-hint>Hint</mat-hint>
+  </mat-form-field>
+</p>
+<p>
+  <mat-form-field appearance="standard">
+    <mat-label>Standard form field</mat-label>
+    <input matInput placeholder="Placeholder">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    <mat-hint>Hint</mat-hint>
+  </mat-form-field>
+</p>
+<p>
+  <mat-form-field appearance="fill">
+    <mat-label>Fill form field</mat-label>
+    <input matInput placeholder="Placeholder">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    <mat-hint>Hint</mat-hint>
+  </mat-form-field>
+</p>
+<p>
+  <mat-form-field appearance="outline">
+    <mat-label>Outline form field</mat-label>
+    <input matInput placeholder="Placeholder">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    <mat-hint>Hint</mat-hint>
+  </mat-form-field>
+</p>
+
+
+<p> 错误信息</p>
+
+<div class="example-container">
+  <mat-form-field>
+    <input matInput placeholder="Enter your email" required email ngModel name="email" #email="ngModel">
+    <mat-error *ngIf="email.invalid">邮件格式不正确</mat-error>
+  </mat-form-field>
+</div>
+
+
+<p>前缀和后缀</p>
+<div class="example-container ">
+  <mat-form-field>
+    <input matInput placeholder="请输入密码" [type]="hide ? 'password' : 'text'">
+    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field class="">
+    <input matInput placeholder="Amount" type="number" class="example-right-align">
+    <span matPrefix>$&nbsp;</span>
+    <span matSuffix>.00</span>
+  </mat-form-field>
+</div>
+
+
+<h1>自动完成 AutoComplete</h1>
+
+<mat-form-field>
+  <input type="text" matInput [matAutocomplete]="auto">
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete">
+  <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
+</mat-autocomplete>
+
+<h1>检查框 checkBox</h1>
+<mat-checkbox>选我</mat-checkbox>
+
+
+<h1>日期选择器</h1>
+<mat-form-field>
+  <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+
+
+<h1>单选按钮 RadioButton</h1>
+<mat-radio-group>
+  <mat-radio-button value="1">Option 1</mat-radio-button>
+  <mat-radio-button value="2">Option 2</mat-radio-button>
+</mat-radio-group>
+
+
+<h1>选择框 Select</h1>
+<h4>Basic mat-select</h4>
+<mat-form-field>
+  <mat-select placeholder="Favorite food">
+    <mat-option *ngFor="let food of foods" [value]="food">
+      {{food}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<h4>Basic native select</h4>
+<mat-form-field>
+  <select matNativeControl required>
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="mercedes">Mercedes</option>
+    <option value="audi">Audi</option>
+  </select>
+</mat-form-field>
+
+
+<h1>滑杆Slider</h1>
+<mat-slider
+  thumbLabel
+  tickInterval="1000"
+  min="1"
+  max="100000"></mat-slider>
+
+
+<h1>滑块开关Slide toggle</h1>
+<mat-slide-toggle>Slide me!</mat-slide-toggle>
+
+

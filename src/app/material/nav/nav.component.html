@@ -1,0 +1,31 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>菜单</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="mat-menu-item-highlighted">Dashboard</a>
+      <a mat-list-item routerLink="/heroes" routerLinkActive="mat-menu-item-highlighted">Heroes</a>
+      <a mat-list-item routerLink="/rxjs" routerLinkActive="mat-menu-item-highlighted">Rxjs练习</a>
+      <a mat-list-item routerLink="/directive" routerLinkActive="mat-menu-item-highlighted">指令</a>
+      <a mat-list-item routerLink="/customPipe" routerLinkActive="mat-menu-item-highlighted">自定义管道</a>
+      <a mat-list-item routerLink="/heroForm" routerLinkActive="mat-menu-item-highlighted">表单及其验证</a>
+      <a mat-list-item routerLink="/material/addressForm" routerLinkActive="mat-menu-item-highlighted">AddressForm地址表单</a>
+      <a mat-list-item routerLink="/material/formControls" routerLinkActive="mat-menu-item-highlighted">Material表单控件</a>
+      <a mat-list-item routerLink="/material/layout" routerLinkActive="mat-menu-item-highlighted">Material布局</a>
+      <a mat-list-item routerLink="/material/table" routerLinkActive="mat-menu-item-highlighted">Material表格</a>
+      <a mat-list-item routerLink="/material/dashBoard" routerLinkActive="mat-menu-item-highlighted">DashBoard仪表盘</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>angular-hero</span>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
