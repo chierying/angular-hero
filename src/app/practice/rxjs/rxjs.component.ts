@@ -22,12 +22,12 @@ export class RxjsComponent implements OnInit {
     const aryb = ['b1', 'b2', 'b3'];
     const aryc = ['c1', 'c2', 'c3'];
 
-    let bs = new BehaviorSubject(null);
+    let bs = new BehaviorSubject(' ');
     let fa = from(arya);
     let fb = from(aryb);
     let fc = from(aryc);
 
-    fa.subscribe(value => bs.next(value));
+    fa.subscribe(bs);
 
     let filters = [bs.asObservable(), fb, fc];
     combineLatest(filters)

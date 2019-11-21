@@ -16,7 +16,7 @@ export class TableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   @ViewChild(MatTable, {static: false}) table: MatTable<TableItem>;
-  filterText$ = new BehaviorSubject(null);
+  filterText$ = new BehaviorSubject<string>(null);
   dataSource: TableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -49,6 +49,7 @@ export class TableComponent implements AfterViewInit, OnInit {
    * 过滤表格
    */
   filterTable(value: string) {
+    this.dataSource.filterText = value;
     this.filterText$.next(value);
   }
 }
