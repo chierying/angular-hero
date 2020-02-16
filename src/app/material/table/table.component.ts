@@ -2,10 +2,9 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
-import {TableDataSource, TableItem} from './table-datasource';
+import {TableDataSource} from './table-datasource';
 import {BehaviorSubject} from 'rxjs';
 import {MatSnackBar} from '@angular/material';
-import {debounceTime, distinctUntilChanged, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-table',
@@ -26,22 +25,11 @@ export class TableComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    this.dataSource = new TableDataSource();
+
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.filterText$ = this.filterText$.pipe(
-      debounceTime<string>(300),
-      distinctUntilChanged(),
-      tap(text => {
-        this.dataSource.filterText = text;
-        // 过滤规则改变就到第一页
-        this.paginator.firstPage();
-        this.snackBar.open(`过滤数据：${text}`, 'ok', {duration: 2000});
-      })
-    );
+    this.dataSource = new TableDataSource(new BehaviorSubject(EXAMPLE_DATA), this.paginator, this.sort, this.filterText$);
     this.table.dataSource = this.dataSource;
   }
 
@@ -49,7 +37,37 @@ export class TableComponent implements AfterViewInit, OnInit {
    * 过滤表格
    */
   filterTable(value: string) {
-    this.dataSource.filterText = value;
     this.filterText$.next(value);
   }
 }
+
+
+// TODO: Replace this with your own data model type
+export interface TableItem {
+  name: string;
+  id: number;
+}
+
+// TODO: replace this with real data from your application
+const EXAMPLE_DATA: TableItem[] = [
+  {id: 1, name: 'Hydrogen'},
+  {id: 2, name: 'Helium'},
+  {id: 3, name: 'Lithium'},
+  {id: 4, name: 'Beryllium'},
+  {id: 5, name: 'Boron'},
+  {id: 6, name: 'Carbon'},
+  {id: 7, name: 'Nitrogen'},
+  {id: 8, name: 'Oxygen'},
+  {id: 9, name: 'Fluorine'},
+  {id: 10, name: 'Neon'},
+  {id: 11, name: 'Sodium'},
+  {id: 12, name: 'Magnesium'},
+  {id: 13, name: 'Aluminum'},
+  {id: 14, name: 'Silicon'},
+  {id: 15, name: 'Phosphorus'},
+  {id: 16, name: 'Sulfur'},
+  {id: 17, name: 'Chlorine'},
+  {id: 18, name: 'Argon'},
+  {id: 19, name: 'Potassium'},
+  {id: 20, name: 'Calcium'},
+];

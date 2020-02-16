@@ -1,38 +1,9 @@
 import {DataSource} from '@angular/cdk/collections';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {map} from 'rxjs/operators';
-import {merge, Observable, of as observableOf} from 'rxjs';
-
-// TODO: Replace this with your own data model type
-export interface TableItem {
-  name: string;
-  id: number;
-}
-
-// TODO: replace this with real data from your application
-const EXAMPLE_DATA: TableItem[] = [
-  {id: 1, name: 'Hydrogen'},
-  {id: 2, name: 'Helium'},
-  {id: 3, name: 'Lithium'},
-  {id: 4, name: 'Beryllium'},
-  {id: 5, name: 'Boron'},
-  {id: 6, name: 'Carbon'},
-  {id: 7, name: 'Nitrogen'},
-  {id: 8, name: 'Oxygen'},
-  {id: 9, name: 'Fluorine'},
-  {id: 10, name: 'Neon'},
-  {id: 11, name: 'Sodium'},
-  {id: 12, name: 'Magnesium'},
-  {id: 13, name: 'Aluminum'},
-  {id: 14, name: 'Silicon'},
-  {id: 15, name: 'Phosphorus'},
-  {id: 16, name: 'Sulfur'},
-  {id: 17, name: 'Chlorine'},
-  {id: 18, name: 'Argon'},
-  {id: 19, name: 'Potassium'},
-  {id: 20, name: 'Calcium'},
-];
+import {BehaviorSubject, merge, Observable} from 'rxjs';
+import {TableItem} from './table.component';
+import {debounceTime, distinctUntilChanged, map, tap} from 'rxjs/operators';
 
 /**
  * Data source for the Table view. This class should
@@ -40,16 +11,18 @@ const EXAMPLE_DATA: TableItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class TableDataSource extends DataSource<TableItem> {
-  data: TableItem[] = EXAMPLE_DATA;
+  data: BehaviorSubject<TableItem[]>;
   paginator: MatPaginator;
   sort: MatSort;
   // 表格过滤流
-  filterText$: Observable<string>;
-  // 当前过滤字符
-  filterText: string;
+  filterText$: BehaviorSubject<string>;
 
-  constructor() {
+  constructor(data: BehaviorSubject<TableItem[]>, paginator: MatPaginator, sort: MatSort, filterText$: BehaviorSubject<string>) {
     super();
+    this.data = data;
+    this.paginator = paginator;
+    this.sort = sort;
+    this.filterText$ = filterText$;
   }
 
   /**
@@ -61,15 +34,23 @@ export class TableDataSource extends DataSource<TableItem> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
-      observableOf(this.data),
+      this.data,
       this.paginator.page,
       this.sort.sortChange,
-      this.filterText$,
+      this.filterText$.pipe(
+        debounceTime<string>(300),
+        distinctUntilChanged(),
+        tap(text => {
+          // 过滤规则改变就到第一页
+          this.paginator.firstPage();
+        })
+      )
     ];
 
     return merge(...dataMutations).pipe(
       map(() => {
-        return this.getPagedData(this.getSortedData(this.getFilteredData([...this.data])));
+        return this.getPagedData(this.getSortedData(this.getFilteredData([...this.data.getValue()],
+          this.filterText$.getValue())));
       }));
   }
 
@@ -83,12 +64,13 @@ export class TableDataSource extends DataSource<TableItem> {
   /**
    * 过滤数据
    */
-  private getFilteredData(data: TableItem[]) {
+  private getFilteredData(data: TableItem[], filterText: string) {
+    console.log(`过滤数据：${data.length}, filterText:${filterText}`);
     let filteredData;
-    if (!this.filterText) {
+    if (!filterText) {
       filteredData = data;
     } else {
-      filteredData = data.filter(item => item.name.toLocaleLowerCase().includes(this.filterText));
+      filteredData = data.filter(item => item.name.toLocaleLowerCase().includes(filterText));
     }
     this.paginator.length = filteredData.length;
     return filteredData;

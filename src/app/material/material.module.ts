@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
 
 import {MaterialRoutingModule} from './material-routing.module';
 import {NavComponent} from './nav/nav.component';
@@ -36,6 +35,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import {DashBoardComponent} from './dash-board/dash-board.component';
 import {MatMenuModule} from '@angular/material/menu';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   declarations: [NavComponent, AddressFormComponent, FormControlsComponent, LayoutComponent, TableComponent, DashBoardComponent],
@@ -43,7 +43,7 @@ import {MatMenuModule} from '@angular/material/menu';
     NavComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     MaterialRoutingModule,
     LayoutModule,
     MatToolbarModule,

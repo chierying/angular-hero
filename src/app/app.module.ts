@@ -3,8 +3,6 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {FormsModule} from '@angular/forms';
-import {MessagesComponent} from './messages/messages.component';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {InMemoryDataService} from './heroes/in-memory-data.service';
@@ -12,16 +10,17 @@ import {HeroesModule} from './heroes/heroes.module';
 import {PracticeModule} from './practice/practice.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material/material.module';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MessagesComponent,
   ],
   imports: [
+    SharedModule,
     BrowserModule,
-    FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
@@ -33,7 +32,6 @@ import {MaterialModule} from './material/material.module';
     PracticeModule,
     MaterialModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,6 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 
 // 配置路由
 const routes: Routes = [
+  // 惰性加载的模块
+  {path: 'lazyLoad', loadChildren: () => import('./lazy-load/lazy-load.module').then(m => m.LazyLoadModule)},
   // 添加这样一个完全匹配的"空路由"来匹配主页。并重定向到需要的路由
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   // 啥也没匹配到的时候 404
