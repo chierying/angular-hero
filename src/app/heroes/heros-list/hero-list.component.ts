@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Hero} from '../hero';
-import {HeroService} from '../hero.service';
+import {Hero} from '../services/hero';
+import {HeroService} from '../services/hero.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-hero-list',
@@ -9,12 +10,16 @@ import {HeroService} from '../hero.service';
 })
 export class HeroListComponent implements OnInit {
   heroes: Hero[];
+  selectedId: number;
 
-  constructor(private heroService: HeroService) {
+  constructor(private heroService: HeroService,
+              private route: ActivatedRoute
+  ) {
   }
 
   ngOnInit() {
     this.getHeroes();
+    this.selectedId = +this.route.snapshot.paramMap.get('id');
   }
 
   getHeroes(): void {

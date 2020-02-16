@@ -5,7 +5,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
-import {InMemoryDataService} from './heroes/in-memory-data.service';
+import {InMemoryDataService} from './heroes/services/in-memory-data.service';
 import {HeroesModule} from './heroes/heroes.module';
 import {PracticeModule} from './practice/practice.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';

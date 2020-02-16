@@ -7,6 +7,7 @@ import {UniqueAlterEgoValidatorDirective} from './validators/unique-alter-ego-va
 import {HighlightDirective} from './directives/highlight.directive';
 import {UnlessDirective} from './directives/unless.directive';
 import {FormsModule} from '@angular/forms';
+import { ComposeMessageComponent } from './compose-message/compose-message.component';
 
 
 /**
@@ -19,7 +20,8 @@ import {FormsModule} from '@angular/forms';
     IdentityRevealedValidatorDirective,
     UniqueAlterEgoValidatorDirective,
     HighlightDirective,
-    UnlessDirective
+    UnlessDirective,
+    ComposeMessageComponent
   ],
   imports: [
     CommonModule,

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Hero} from '../hero';
-import {ActivatedRoute} from '@angular/router';
-import {HeroService} from '../hero.service';
+import {Hero} from '../services/hero';
+import {ActivatedRoute, Router} from '@angular/router';
+import {HeroService} from '../services/hero.service';
 import {Location} from '@angular/common';
 
 @Component({
@@ -14,7 +14,8 @@ export class HeroDetailComponent implements OnInit {
   hero: Hero;
 
   constructor(
-    private router: ActivatedRoute,
+    private router: Router,
+    private route: ActivatedRoute,
     private heroService: HeroService,
     private location: Location
   ) {
@@ -22,7 +23,7 @@ export class HeroDetailComponent implements OnInit {
 
   ngOnInit() {
     // 用+把字符串转换为数字
-    const id = +this.router.snapshot.paramMap.get('id');
+    const id = +this.route.snapshot.paramMap.get('id');
     this.getHero(id);
   }
 
@@ -31,7 +32,8 @@ export class HeroDetailComponent implements OnInit {
   }
 
   goBack() {
-    this.location.back();
+    // this.location.back();
+    this.router.navigate(['/heroes/hero-list', {id: this.hero.id, foo: 'foo'}]);
   }
 
   save() {

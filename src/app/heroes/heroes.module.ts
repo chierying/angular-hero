@@ -7,6 +7,8 @@ import {HeroSearchComponent} from './hero-search/hero-search.component';
 import {HeroListComponent} from './heros-list/hero-list.component';
 import {MessagesComponent} from './messages/messages.component';
 import {SharedModule} from '../shared/shared.module';
+import {CrisisListComponent} from './crisis-list/crisis-list.component';
+import {HeroesComponent} from './heroes.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +17,8 @@ import {SharedModule} from '../shared/shared.module';
     HeroSearchComponent,
     HeroListComponent,
     MessagesComponent,
+    CrisisListComponent,
+    HeroesComponent,
   ],
   imports: [
     SharedModule,

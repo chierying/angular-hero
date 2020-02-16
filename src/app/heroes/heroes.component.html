@@ -1,0 +1,12 @@
+<h1>演示子路由</h1>
+<p>子路由默认会使用父组件中的路由出口router-outlet</p>
+<nav style="display: flex; justify-content: center; align-items: center">
+  <!--
+  此处可以使用相对导航路径，
+  因为要导航到自己的子路由中，
+  自己的子路由是路径相对自己的。
+  -->
+  <a routerLink="/heroes/hero-list" routerLinkActive="active">Hero List</a>
+  <a routerLink="/heroes/dashboard" routerLinkActive="active">dashboard</a>
+</nav>
+<router-outlet></router-outlet>
